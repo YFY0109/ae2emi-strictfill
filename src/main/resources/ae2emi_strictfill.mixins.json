@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.yfy0109.ae2emistrictfill.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "com.yfy0109.ae2emistrictfill.mixin.StrictFillMixinPlugin",
+  "client": [
+    "AbstractRecipeHandlerMixin",
+    "EmiUseCraftingRecipeHandlerMixin",
+    "JemiRecipeHandlerMixin",
+    "ExCraftingTransferHandlerMixin",
+    "EmiStackMeInventoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

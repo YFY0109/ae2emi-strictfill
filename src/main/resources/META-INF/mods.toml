@@ -1,0 +1,65 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="ae2emi_strictfill"
+version="1.0.1"
+displayName="AE2 EMI Strict Fill"
+displayTest="IGNORE_ALL_VERSION"
+description='''
+AE2 合成终端在使用 EMI 配方填充时，只有在所有原料都能立即取出时才允许填充；否则展开配方页。
+配置可在“选项 → 模组 → AE2 EMI Strict Fill → 配置”中即时切换，无需重启。
+'''
+
+[[dependencies.ae2emi_strictfill]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ae2emi_strictfill]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ae2emi_strictfill]]
+modId="ae2"
+mandatory=true
+versionRange="[15.4.10,)"
+ordering="AFTER"
+side="CLIENT"
+
+[[dependencies.ae2emi_strictfill]]
+modId="emi"
+mandatory=true
+versionRange="[1.1.22,)"
+ordering="AFTER"
+side="CLIENT"
+
+# 可选：ExtendedAE 的扩展合成终端（JEI 传输路径）
+[[dependencies.ae2emi_strictfill]]
+modId="expatternprovider"
+mandatory=false
+versionRange="[1.0,)"
+ordering="AFTER"
+side="CLIENT"
+
+# 可选：ExtendedAE 的 JEI 传输处理器
+[[dependencies.ae2emi_strictfill]]
+modId="jei"
+mandatory=false
+versionRange="[15.0,)"
+ordering="AFTER"
+side="CLIENT"
+
+# 可选：GTLCore，提供 MeInventoryAmountClient（ME 网络库存）
+[[dependencies.ae2emi_strictfill]]
+modId="gtlcore"
+mandatory=false
+versionRange="[1.2.0,)"
+ordering="AFTER"
+side="CLIENT"

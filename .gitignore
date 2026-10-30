@@ -1,0 +1,11 @@
+# Gradle
+.gradle/
+build/
+
+# 本地构建产物与备份
+dist/
+*.log
+*.bak
+
+# 编译期依赖（从整合包 mods 目录复制，不提交）
+libs/*.jar

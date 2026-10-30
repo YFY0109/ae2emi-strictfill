@@ -1,0 +1,11 @@
+{
+  "ae2emi_strictfill.config.title": "AE2 EMI Strict Fill",
+  "ae2emi_strictfill.config.enabled": "Enable Mod",
+  "ae2emi_strictfill.config.enabled.tooltip": "When disabled, AE2's original behavior is fully restored (partial fill allowed).",
+  "ae2emi_strictfill.config.allow_partial": "Allow Partial Fill on Recipe Page",
+  "ae2emi_strictfill.config.allow_partial.tooltip": "Only applies while the mod is enabled. When on, the recipe page's + button can still move available ingredients; left-clicking a favorite remains strict.",
+  "ae2emi_strictfill.config.on": "ON",
+  "ae2emi_strictfill.config.off": "OFF",
+  "ae2emi_strictfill.config.hint.enabled": "Changes apply immediately, no restart needed.",
+  "ae2emi_strictfill.config.hint.disabled": "Mod disabled: AE2 original behavior is active."
+}

@@ -1,0 +1,63 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = '1.0.1'
+group = 'com.yfy0109.ae2emistrictfill'
+base {
+    archivesName = 'ae2emi-strictfill'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'forge'
+        url = 'https://maven.minecraftforge.net/'
+    }
+    maven {
+        name = 'sponge'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.16'
+
+    // 本地整合包里的 AE2 / EMI，仅编译期使用
+    compileOnly files('libs/appliedenergistics2-forge-15.4.10.jar')
+    compileOnly files('libs/emi-1.1.22+1.20.1+forge.jar')
+    compileOnly files('libs/ExtendedAE-1.20-1.4.19-forge.jar')
+    compileOnly files('libs/Glodium-1.20-1.5-forge.jar')
+    compileOnly files('libs/jei-1.20.1-forge-15.49.0.188.jar')
+    // GTLCore：复用它的 ME 网络库存查询（MeInventoryAmountClient）
+    compileOnly files('libs/gtlcore-1.2.3.1-fix9.jar')
+
+    // Forge 运行时自带 Mixin；这里显式加编译依赖
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+}
+
+jar {
+    manifest {
+        attributes([
+                'Specification-Title'   : 'ae2emi_strictfill',
+                'Specification-Vendor'  : 'YFY0109',
+                'Specification-Version' : '1',
+                'Implementation-Title'  : project.name,
+                'Implementation-Version': project.version,
+                'Implementation-Vendor' : 'YFY0109',
+                'MixinConfigs'          : 'ae2emi_strictfill.mixins.json'
+        ])
+    }
+}

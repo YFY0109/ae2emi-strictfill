@@ -1,0 +1,11 @@
+{
+  "ae2emi_strictfill.config.title": "AE2 EMI 严格填充",
+  "ae2emi_strictfill.config.enabled": "启用模组",
+  "ae2emi_strictfill.config.enabled.tooltip": "关闭后完全恢复 AE2 原行为（允许部分填充）。",
+  "ae2emi_strictfill.config.allow_partial": "详细配方页允许不完整填充",
+  "ae2emi_strictfill.config.allow_partial.tooltip": "仅在启用模组时生效。开启后，配方页 + 按钮仍可把现有材料填进合成格；左键收藏仍然只在材料齐全时填充。",
+  "ae2emi_strictfill.config.on": "开启",
+  "ae2emi_strictfill.config.off": "关闭",
+  "ae2emi_strictfill.config.hint.enabled": "修改立即生效，无需重启。",
+  "ae2emi_strictfill.config.hint.disabled": "模组已关闭：使用 AE2 原行为。"
+}
