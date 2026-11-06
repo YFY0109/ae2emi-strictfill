@@ -46,7 +46,7 @@ $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
 & "C:\Users\YFY0109\AppData\Local\Temp\opencode\gradle-8.8\bin\gradle.bat" -p "C:\Users\YFY0109\Documents\默认项目\AE2EMI严格填充" build --no-daemon
 ```
 
-产物：`build/libs/ae2emi-strictfill-1.0.1.jar`（`dist/` 下有副本）。
+产物：`build/libs/ae2emi-strictfill-1.0.2.jar`（`dist/` 下有副本）。
 
 依赖（编译期，来自整合包，放进 `libs/`）：
 - `libs/appliedenergistics2-forge-15.4.10.jar`
@@ -59,7 +59,7 @@ $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
 ## 安装
 
 1. 关闭游戏；
-2. 把 `ae2emi-strictfill-1.0.1.jar` 放进：
+2. 把 `ae2emi-strictfill-1.0.2.jar` 放进：
    `C:\Minecraft\.minecraft\versions\GregTech Leisure\mods\`
 3. 重启游戏；
 4. 打开 **选项 → 模组**，确认能看到 `AE2 EMI Strict Fill`，点“配置”。
@@ -129,3 +129,35 @@ GTLCore 自带“背包里有无线终端时，JEI/Jade 显示物品在 ME 网�
 未安装 GTLCore 时，Mixin 内捕获 `Throwable` 静默跳过，不影响 EMI 正常 tooltip。
 
 可选依赖：`gtlcore`。
+
+## 收藏缺失（EMI，1.0.2 新增）
+
+GTLCore 在 AE2 的“合成确认”界面加了一个 **收藏缺失** 按钮，但只写入 JEI 书签：
+
+```java
+if (LDLib.isJeiLoaded()) { ... }   // 只有 JEI 才加按钮
+```
+
+1.0.2 做了两件事：
+
+1. **`JeiMissingIngredientBookmarksMixin`**
+   GTLCore 的 `add` 执行完后，如果装了 EMI，再把同一批缺失材料写入 EMI 收藏（`EmiFavorites.addFavorite`）。
+   JEI 原有行为不变：JEI 书签照样加。
+
+2. **`CraftConfirmScreenEmiMixin`**
+   只有 EMI、没有 JEI 时，GTLCore 不会加按钮；这个 Mixin 补一个同样的“收藏缺失”按钮，点击后走上面的 `add`，最终写入 EMI 收藏。
+
+支持的材料：
+
+- 物品（`AEItemKey` → `EmiStack.of(itemStack)`）；
+- 流体（`AEFluidKey` → `EmiStack.of(fluid)`）。
+
+三种组合：
+
+| JEI | EMI | 点击“收藏缺失” |
+|---|---|---|
+| 有 | 无 | 只加 JEI 书签（原行为） |
+| 有 | 有 | JEI 书签 + EMI 收藏 |
+| 无 | 有 | 只加 EMI 收藏 |
+
+可选依赖：`emi`。

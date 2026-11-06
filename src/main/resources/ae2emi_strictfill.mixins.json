@@ -9,7 +9,9 @@
     "EmiUseCraftingRecipeHandlerMixin",
     "JemiRecipeHandlerMixin",
     "ExCraftingTransferHandlerMixin",
-    "EmiStackMeInventoryMixin"
+    "EmiStackMeInventoryMixin",
+    "JeiMissingIngredientBookmarksMixin",
+    "CraftConfirmScreenEmiMixin"
   ],
   "injectors": {
     "defaultRequire": 1
