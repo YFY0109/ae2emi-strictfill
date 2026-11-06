@@ -5,6 +5,7 @@ import appeng.client.gui.AEBaseScreen;
 import appeng.client.gui.me.crafting.CraftConfirmScreen;
 import appeng.client.gui.style.ScreenStyle;
 import appeng.menu.me.crafting.CraftConfirmMenu;
+import com.lowdragmc.lowdraglib.LDLib;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,8 +23,11 @@ import java.util.List;
 
 /**
  * 只有 EMI、没有 JEI 时，GTLCore 不会添加“收藏缺失”按钮。
- * 这里补一个同样的按钮，点击后走 {@link JeiMissingIngredientBookmarks#add}，
- * 由 {@link JeiMissingIngredientBookmarksMixin} 转交给 EMI 书签。
+ * <p>
+ * 必须复用 GTLCore 的 style id {@code favoriteMissing}：
+ * 它在 {@code assets/ae2/screens/modify_craft_confirm.json} 里有布局。
+ * 用自定义 id 会导致 {@code WidgetContainer.add} 里 {@code style.getWidget(id)} 返回 null，
+ * 进而在 CraftConfirmScreen 构造时抛 NPE，界面打不开。
  */
 @Mixin(value = CraftConfirmScreen.class, remap = false)
 public abstract class CraftConfirmScreenEmiMixin extends AEBaseScreen<CraftConfirmMenu> {
@@ -40,14 +44,14 @@ public abstract class CraftConfirmScreenEmiMixin extends AEBaseScreen<CraftConfi
     private void ae2emi$addButton(CraftConfirmMenu menu, Inventory playerInventory, Component title, ScreenStyle style,
                                   CallbackInfo ci) {
         // GTLCore 用 LDLib.isJeiLoaded() 判断：EMI 接管时为 false，它不会加按钮
-        if (com.lowdragmc.lowdraglib.LDLib.isJeiLoaded()) {
+        if (LDLib.isJeiLoaded()) {
             return;
         }
         if (!ModList.get().isLoaded("emi")) {
             return;
         }
         this.ae2emi$favoriteMissing = this.widgets.addButton(
-                "favoriteMissingEmi",
+                "favoriteMissing",
                 Component.translatable("gui.gtlcore.ae.favorite_missing"),
                 this::ae2emi$click);
         this.ae2emi$favoriteMissing.active = false;
@@ -65,7 +69,8 @@ public abstract class CraftConfirmScreenEmiMixin extends AEBaseScreen<CraftConfi
     private List<AEKey> ae2emi$missing() {
         AbstractContainerMenu menu = this.getMenu();
         if (menu instanceof IConfirmStartMenu confirmMenu) {
-            return confirmMenu.gtlcore$getMissingNow();
+            List<AEKey> list = confirmMenu.gtlcore$getMissingNow();
+            return list == null ? List.of() : list;
         }
         return List.of();
     }
