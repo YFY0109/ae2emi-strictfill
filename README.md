@@ -46,7 +46,7 @@ $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
 & "C:\Users\YFY0109\AppData\Local\Temp\opencode\gradle-8.8\bin\gradle.bat" -p "C:\Users\YFY0109\Documents\默认项目\AE2EMI严格填充" build --no-daemon
 ```
 
-产物：`build/libs/ae2emi-strictfill-1.0.2.jar`（`dist/` 下有副本）。
+产物：`build/libs/ae2emi-strictfill-1.0.3.jar`（`dist/` 下有副本）。
 
 依赖（编译期，来自整合包，放进 `libs/`）：
 - `libs/appliedenergistics2-forge-15.4.10.jar`
@@ -59,7 +59,7 @@ $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
 ## 安装
 
 1. 关闭游戏；
-2. 把 `ae2emi-strictfill-1.0.2.jar` 放进：
+2. 把 `ae2emi-strictfill-1.0.3.jar` 放进：
    `C:\Minecraft\.minecraft\versions\GregTech Leisure\mods\`
 3. 重启游戏；
 4. 打开 **选项 → 模组**，确认能看到 `AE2 EMI Strict Fill`，点“配置”。
@@ -159,5 +159,21 @@ if (LDLib.isJeiLoaded()) { ... }   // 只有 JEI 才加按钮
 | 有 | 无 | 只加 JEI 书签（原行为） |
 | 有 | 有 | JEI 书签 + EMI 收藏 |
 | 无 | 有 | 只加 EMI 收藏 |
+
+### 1.0.3 修复
+
+1.0.2 用 `ModList.isLoaded("jei")` 判断按钮是否由 GTLCore 添加，但 EMI 接管时 `LDLib.isJeiLoaded()` 返回 **false**，GTLCore 不会加按钮，导致两边都不加。
+
+1.0.3 改用 `LDLib.isJeiLoaded()`：
+
+```java
+if (LDLib.isJeiLoaded()) {   // JEI 真正接管
+    return;                   // GTLCore 已加
+}
+if (!ModList.get().isLoaded("emi")) {
+    return;
+}
+// EMI 接管 → 补按钮
+```
 
 可选依赖：`emi`。

@@ -39,8 +39,8 @@ public abstract class CraftConfirmScreenEmiMixin extends AEBaseScreen<CraftConfi
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
     private void ae2emi$addButton(CraftConfirmMenu menu, Inventory playerInventory, Component title, ScreenStyle style,
                                   CallbackInfo ci) {
-        // JEI 在时 GTLCore 自己会加按钮，不重复
-        if (ModList.get().isLoaded("jei")) {
+        // GTLCore 用 LDLib.isJeiLoaded() 判断：EMI 接管时为 false，它不会加按钮
+        if (com.lowdragmc.lowdraglib.LDLib.isJeiLoaded()) {
             return;
         }
         if (!ModList.get().isLoaded("emi")) {

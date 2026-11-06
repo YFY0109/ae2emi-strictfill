@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-version = '1.0.2'
+version = '1.0.3'
 group = 'com.yfy0109.ae2emistrictfill'
 base {
     archivesName = 'ae2emi-strictfill'
@@ -43,6 +43,8 @@ dependencies {
     compileOnly files('libs/jei-1.20.1-forge-15.49.0.188.jar')
     // GTLCore：复用它的 ME 网络库存查询（MeInventoryAmountClient）
     compileOnly files('libs/gtlcore-1.2.3.1-fix9.jar')
+    // LDLib：判断 JEI 是否真正接管（EMI 加载时 isJeiLoaded 为 false）
+    compileOnly files('libs/ldlib-forge-1.20.1-1.0.33.b.jar')
 
     // Forge 运行时自带 Mixin；这里显式加编译依赖
     compileOnly 'org.spongepowered:mixin:0.8.5'
